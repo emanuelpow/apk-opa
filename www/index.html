@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registro Lavorazioni</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    color: #17202a;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+    padding: 15px;
+}
+
+.header {
+    background: white;
+    border-radius: 16px;
+    padding: 18px;
+    margin-bottom: 15px;
+    box-shadow: 0 3px 12px rgba(0,0,0,.08);
+}
+
+h1 {
+    margin: 0 0 5px;
+    font-size: 25px;
+}
+
+.subtitle {
+    color: #68737d;
+    font-size: 14px;
+}
+
+.month-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.month-bar button {
+    width: 45px;
+    height: 42px;
+    border: 0;
+    border-radius: 10px;
+    background: #17202a;
+    color: white;
+    font-size: 25px;
+}
+
+.month-name {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.card {
+    background: white;
+    border-radius: 16px;
+    padding: 18px;
+    margin-bottom: 15px;
+    box-shadow: 0 3px 12px rgba(0,0,0,.08);
+}
+
+.card h2 {
+    margin: 0 0 15px;
+    font-size: 19px;
+}
+
+.date {
+    color: #68737d;
+    margin-bottom: 15px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.field label {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e1e5e8;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+input:focus {
+    outline: none;
+    border-color: #17202a;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+button {
+    border: 0;
+    border-radius: 10px;
+    padding: 12px 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.primary {
+    background: #17202a;
+    color: white;
+    flex: 1;
+}
+
+.secondary {
+    background: #e7ebee;
+    color: #17202a;
+}
+
+.danger {
+    background: #c0392b;
+    color: white;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    min-width: 700px;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 11px 7px;
+    border-bottom: 1px solid #edf0f2;
+    text-align: center;
+    font-size: 14px;
+}
+
+th {
+    font-size: 12px;
+    color: #68737d;
+}
+
+th:first-child,
+td:first-child {
+    text-align: left;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+}
+
+.action-buttons button {
+    padding: 7px 9px;
+    font-size: 11px;
+}
+
+.empty {
+    text-align: center;
+    padding: 20px;
+    color: #8a949c;
+}
+
+.export-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.export-buttons button {
+    flex: 1;
+    background: #17202a;
+    color: white;
+}
+
+.total-box {
+    position: sticky;
+    bottom: 0;
+    background: #17202a;
+    color: white;
+    border-radius: 16px;
+    padding: 16px;
+    margin-top: 15px;
+    box-shadow: 0 -5px 20px rgba(0,0,0,.18);
+}
+
+.total-title {
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.total-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 7px;
+}
+
+.total-item {
+    background: #26323d;
+    border-radius: 10px;
+    padding: 9px 4px;
+    text-align: center;
+}
+
+.total-item b {
+    display: block;
+    font-size: 21px;
+}
+
+.total-item span {
+    font-size: 10px;
+    color: #cbd3d9;
+}
+
+.total-all {
+    text-align: center;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.note {
+    color: #75808a;
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+@media (max-width: 650px) {
+
+    .container {
+        padding: 10px;
+    }
+
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grid .field:last-child {
+        grid-column: 1 / -1;
+    }
+
+    .total-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .export-buttons {
+        flex-direction: column;
+    }
+
+    h1 {
+        font-size: 22px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+
+        <h1>📋 Registro Lavorazioni</h1>
+
+        <div class="subtitle">
+            Inserisci ogni giorno le tue lavorazioni
+        </div>
+
+        <div class="month-bar">
+
+            <button onclick="changeMonth(-1)">‹</button>
+
+            <div class="month-name" id="monthName"></div>
+
+            <button onclick="changeMonth(1)">›</button>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>Inserisci giornata</h2>
+
+        <div class="date" id="dateText"></div>
+
+        <div class="grid">
+
+            <div class="field">
+                <label>Impianti</label>
+                <input id="impianti" type="number" min="0" value="0">
+            </div>
+
+            <div class="field">
+                <label>Guasti</label>
+                <input id="guasti" type="number" min="0" value="0">
+            </div>
+
+            <div class="field">
+                <label>Task</label>
+                <input id="task" type="number" min="0" value="0">
+            </div>
+
+            <div class="field">
+                <label>TTO</label>
+                <input id="tto" type="number" min="0" value="0">
+            </div>
+
+            <div class="field">
+                <label>Attivazioni</label>
+                <input id="attivazioni" type="number" min="0" value="0">
+            </div>
+
+        </div>
+
+        <div class="buttons">
+
+            <button class="primary" onclick="saveDay()">
+                SALVA GIORNATA
+            </button>
+
+            <button class="secondary" onclick="resetForm()">
+                ANNULLA
+            </button>
+
+        </div>
+
+        <div class="note">
+            I dati vengono salvati direttamente sul dispositivo.
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>
+            Giornate di <span id="monthTitle"></span>
+        </h2>
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Data</th>
+                        <th>Impianti</th>
+                        <th>Guasti</th>
+                        <th>Task</th>
+                        <th>TTO</th>
+                        <th>Attivazioni</th>
+                        <th>Azioni</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="tableBody"></tbody>
+
+            </table>
+
+        </div>
+
+        <div id="empty" class="empty">
+            Nessuna giornata registrata.
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>Esporta mese</h2>
+
+        <div class="export-buttons">
+
+            <button onclick="exportCSV()">
+                📥 SCARICA CSV
+            </button>
+
+            <button onclick="exportExcel()">
+                📊 SCARICA EXCEL
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="total-box">
+
+        <div class="total-title" id="totalTitle">
+            TOTALE MESE
+        </div>
+
+        <div class="total-grid">
+
+            <div class="total-item">
+                <b id="totalImpianti">0</b>
+                <span>IMPIANTI</span>
+            </div>
+
+            <div class="total-item">
+                <b id="totalGuasti">0</b>
+                <span>GUASTI</span>
+            </div>
+
+            <div class="total-item">
+                <b id="totalTask">0</b>
+                <span>TASK</span>
+            </div>
+
+            <div class="total-item">
+                <b id="totalTto">0</b>
+                <span>TTO</span>
+            </div>
+
+            <div class="total-item">
+                <b id="totalAttivazioni">0</b>
+                <span>ATTIVAZIONI</span>
+            </div>
+
+            <div class="total-item">
+                <b id="totalLavorazioni">0</b>
+                <span>TOTALE</span>
+            </div>
+
+        </div>
+
+        <div class="total-all" id="totalAll">
+            0 lavorazioni totali
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+const STORAGE_KEY = "registro_lavorazioni";
+
+let database = JSON.parse(
+    localStorage.getItem(STORAGE_KEY) || "{}"
+);
+
+let currentDate = new Date();
+
+let editingDate = null;
+
+
+/* -------------------------
+   FUNZIONI DATA
+------------------------- */
+
+function pad(number) {
+
+    return String(number).padStart(2, "0");
+
+}
+
+
+function dateKey(date) {
+
+    return (
+        date.getFullYear() +
+        "-" +
+        pad(date.getMonth() + 1) +
+        "-" +
+        pad(date.getDate())
+    );
+
+}
+
+
+function currentMonthKey() {
+
+    return (
+        currentDate.getFullYear() +
+        "-" +
+        pad(currentDate.getMonth() + 1)
+    );
+
+}
+
+
+function monthName() {
+
+    return currentDate
+        .toLocaleDateString("it-IT", {
+            month: "long",
+            year: "numeric"
+        })
+        .replace(/^./, c => c.toUpperCase());
+
+}
+
+
+function formatDate(key) {
+
+    const parts = key.split("-");
+
+    return (
+        parts[2] +
+        "/" +
+        parts[1] +
+        "/" +
+        parts[0].slice(2)
+    );
+
+}
+
+
+/* -------------------------
+   SALVATAGGIO
+------------------------- */
+
+function saveDatabase() {
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(database)
+    );
+
+}
+
+
+/* -------------------------
+   FORM
+------------------------- */
+
+function resetForm() {
+
+    editingDate = null;
+
+    document.getElementById("impianti").value = 0;
+    document.getElementById("guasti").value = 0;
+    document.getElementById("task").value = 0;
+    document.getElementById("tto").value = 0;
+    document.getElementById("attivazioni").value = 0;
+
+    document.getElementById("dateText").textContent =
+        "Data: " +
+        new Date().toLocaleDateString("it-IT");
+
+}
+
+
+function saveDay() {
+
+    let key;
+
+    if (editingDate) {
+
+        key = editingDate;
+
+    } else {
+
+        const today = new Date();
+
+        if (
+            today.getFullYear() === currentDate.getFullYear() &&
+            today.getMonth() === currentDate.getMonth()
+        ) {
+
+            key = dateKey(today);
+
+        } else {
+
+            key =
+                currentDate.getFullYear() +
+                "-" +
+                pad(currentDate.getMonth() + 1) +
+                "-01";
+
+        }
+
+    }
+
+
+    database[key] = {
+
+        impianti: Math.max(
+            0,
+            parseInt(document.getElementById("impianti").value) || 0
+        ),
+
+        guasti: Math.max(
+            0,
+            parseInt(document.getElementById("guasti").value) || 0
+        ),
+
+        task: Math.max(
+            0,
+            parseInt(document.getElementById("task").value) || 0
+        ),
+
+        tto: Math.max(
+            0,
+            parseInt(document.getElementById("tto").value) || 0
+        ),
+
+        attivazioni: Math.max(
+            0,
+            parseInt(document.getElementById("attivazioni").value) || 0
+        )
+
+    };
+
+
+    saveDatabase();
+
+    editingDate = null;
+
+    render();
+
+    resetForm();
+
+}
+
+
+/* -------------------------
+   MODIFICA
+------------------------- */
+
+function editDay(key) {
+
+    const row = database[key];
+
+    editingDate = key;
+
+    document.getElementById("impianti").value =
+        row.impianti;
+
+    document.getElementById("guasti").value =
+        row.guasti;
+
+    document.getElementById("task").value =
+        row.task;
+
+    document.getElementById("tto").value =
+        row.tto;
+
+    document.getElementById("attivazioni").value =
+        row.attivazioni;
+
+    document.getElementById("dateText").textContent =
+        "Modifica giornata: " +
+        formatDate(key);
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+/* -------------------------
+   ELIMINA
+------------------------- */
+
+function deleteDay(key) {
+
+    if (
+        confirm(
+            "Vuoi eliminare la giornata del " +
+            formatDate(key) +
+            "?"
+        )
+    ) {
+
+        delete database[key];
+
+        saveDatabase();
+
+        render();
+
+    }
+
+}
+
+
+/* -------------------------
+   CAMBIO MESE
+------------------------- */
+
+function changeMonth(amount) {
+
+    currentDate.setMonth(
+        currentDate.getMonth() + amount
+    );
+
+    editingDate = null;
+
+    resetForm();
+
+    render();
+
+}
+
+
+/* -------------------------
+   RENDER
+------------------------- */
+
+function render() {
+
+    const name = monthName();
+
+    document.getElementById("monthName").textContent =
+        name;
+
+    document.getElementById("monthTitle").textContent =
+        name;
+
+    document.getElementById("totalTitle").textContent =
+        "TOTALE " + name.toUpperCase();
+
+
+    const month = currentMonthKey();
+
+    const rows = Object.keys(database)
+        .filter(key => key.startsWith(month))
+        .sort();
+
+
+    const tbody =
+        document.getElementById("tableBody");
+
+    tbody.innerHTML = "";
+
+
+    const totals = {
+
+        impianti: 0,
+        guasti: 0,
+        task: 0,
+        tto: 0,
+        attivazioni: 0
+
+    };
+
+
+    rows.forEach(key => {
+
+        const row = database[key];
+
+        totals.impianti += row.impianti;
+        totals.guasti += row.guasti;
+        totals.task += row.task;
+        totals.tto += row.tto;
+        totals.attivazioni += row.attivazioni;
+
+
+        const tr = document.createElement("tr");
+
+
+        tr.innerHTML = `
+
+            <td>
+                <b>${formatDate(key)}</b>
+            </td>
+
+            <td>${row.impianti}</td>
+
+            <td>${row.guasti}</td>
+
+            <td>${row.task}</td>
+
+            <td>${row.tto}</td>
+
+            <td>${row.attivazioni}</td>
+
+            <td>
+
+                <div class="action-buttons">
+
+                    <button
+                        class="secondary"
+                        onclick="editDay('${key}')"
+                    >
+                        Modifica
+                    </button>
+
+                    <button
+                        class="danger"
+                        onclick="deleteDay('${key}')"
+                    >
+                        X
+                    </button>
+
+                </div>
+
+            </td>
+
+        `;
+
+
+        tbody.appendChild(tr);
+
+    });
+
+
+    document.getElementById("empty").style.display =
+        rows.length ? "none" : "block";
+
+
+    document.getElementById("totalImpianti").textContent =
+        totals.impianti;
+
+    document.getElementById("totalGuasti").textContent =
+        totals.guasti;
+
+    document.getElementById("totalTask").textContent =
+        totals.task;
+
+    document.getElementById("totalTto").textContent =
+        totals.tto;
+
+    document.getElementById("totalAttivazioni").textContent =
+        totals.attivazioni;
+
+
+    const total =
+        totals.impianti +
+        totals.guasti +
+        totals.task +
+        totals.tto +
+        totals.attivazioni;
+
+
+    document.getElementById("totalLavorazioni").textContent =
+        total;
+
+    document.getElementById("totalAll").textContent =
+        total + " lavorazioni totali";
+
+}
+
+
+/* -------------------------
+   CSV
+------------------------- */
+
+function csvEscape(value) {
+
+    return '"' +
+        String(value).replaceAll('"', '""') +
+        '"';
+
+}
+
+
+function exportCSV() {
+
+    const month = currentMonthKey();
+
+    const rows = Object.keys(database)
+        .filter(key => key.startsWith(month))
+        .sort();
+
+
+    let total = {
+
+        impianti: 0,
+        guasti: 0,
+        task: 0,
+        tto: 0,
+        attivazioni: 0
+
+    };
+
+
+    let csv =
+        "Data;Impianti;Guasti;Task;TTO;Attivazioni\n";
+
+
+    rows.forEach(key => {
+
+        const row = database[key];
+
+        csv +=
+            csvEscape(formatDate(key)) + ";" +
+            row.impianti + ";" +
+            row.guasti + ";" +
+            row.task + ";" +
+            row.tto + ";" +
+            row.attivazioni +
+            "\n";
+
+
+        total.impianti += row.impianti;
+        total.guasti += row.guasti;
+        total.task += row.task;
+        total.tto += row.tto;
+        total.attivazioni += row.attivazioni;
+
+    });
+
+
+    csv +=
+        "TOTALE;" +
+        total.impianti + ";" +
+        total.guasti + ";" +
+        total.task + ";" +
+        total.tto + ";" +
+        total.attivazioni;
+
+
+    downloadFile(
+        "\ufeff" + csv,
+        "registro_" + month + ".csv",
+        "text/csv;charset=utf-8"
+    );
+
+}
+
+
+/* -------------------------
+   EXCEL
+------------------------- */
+
+function exportExcel() {
+
+    const month = currentMonthKey();
+
+    const rows = Object.keys(database)
+        .filter(key => key.startsWith(month))
+        .sort();
+
+
+    let total = {
+
+        impianti: 0,
+        guasti: 0,
+        task: 0,
+        tto: 0,
+        attivazioni: 0
+
+    };
+
+
+    let html = `
+        <html>
+        <head>
+            <meta charset="UTF-8">
+        </head>
+
+        <body>
+
+        <table border="1">
+
+        <tr>
+            <th>Data</th>
+            <th>Impianti</th>
+            <th>Guasti</th>
+            <th>Task</th>
+            <th>TTO</th>
+            <th>Attivazioni</th>
+        </tr>
+    `;
+
+
+    rows.forEach(key => {
+
+        const row = database[key];
+
+        html += `
+
+            <tr>
+
+                <td>${formatDate(key)}</td>
+
+                <td>${row.impianti}</td>
+
+                <td>${row.guasti}</td>
+
+                <td>${row.task}</td>
+
+                <td>${row.tto}</td>
+
+                <td>${row.attivazioni}</td>
+
+            </tr>
+
+        `;
+
+
+        total.impianti += row.impianti;
+        total.guasti += row.guasti;
+        total.task += row.task;
+        total.tto += row.tto;
+        total.attivazioni += row.attivazioni;
+
+    });
+
+
+    html += `
+
+        <tr>
+
+            <th>TOTALE</th>
+
+            <th>${total.impianti}</th>
+
+            <th>${total.guasti}</th>
+
+            <th>${total.task}</th>
+
+            <th>${total.tto}</th>
+
+            <th>${total.attivazioni}</th>
+
+        </tr>
+
+        </table>
+
+        </body>
+        </html>
+
+    `;
+
+
+    downloadFile(
+        "\ufeff" + html,
+        "registro_" + month + ".xls",
+        "application/vnd.ms-excel"
+    );
+
+}
+
+
+/* -------------------------
+   DOWNLOAD
+------------------------- */
+
+function downloadFile(
+    content,
+    filename,
+    type
+) {
+
+    const blob = new Blob(
+        [content],
+        { type: type }
+    );
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const link =
+        document.createElement("a");
+
+    link.href = url;
+
+    link.download = filename;
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    document.body.removeChild(link);
+
+    setTimeout(
+        () => URL.revokeObjectURL(url),
+        1000
+    );
+
+}
+
+
+/* -------------------------
+   AVVIO APP
+------------------------- */
+
+render();
+
+resetForm();
+
+</script>
+
+</body>
+</html>
