@@ -42,6 +42,13 @@ jobs:
       - name: Decodifica keystore permanente
         run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > registro-lavorazioni.keystore
 
+      - name: Verifica che i secrets siano presenti
+        run: |
+          if [ -z "${{ secrets.KEY_ALIAS }}" ]; then echo "ERRORE: KEY_ALIAS mancante o vuoto"; exit 1; fi
+          if [ -z "${{ secrets.KEYSTORE_PASSWORD }}" ]; then echo "ERRORE: KEYSTORE_PASSWORD mancante o vuoto"; exit 1; fi
+          if [ -z "${{ secrets.KEY_PASSWORD }}" ]; then echo "ERRORE: KEY_PASSWORD mancante o vuoto"; exit 1; fi
+          echo "Tutti i secrets sono presenti."
+
       - name: Trova zipalign e apksigner
         id: sdktools
         run: |
@@ -60,9 +67,9 @@ jobs:
         run: |
           "${{ steps.sdktools.outputs.apksigner }}" sign \
             --ks registro-lavorazioni.keystore \
-            --ks-pass pass:${{ secrets.KEYSTORE_PASSWORD }} \
-            --key-pass pass:${{ secrets.KEY_PASSWORD }} \
-            --ks-key-alias ${{ secrets.KEY_ALIAS }} \
+            --ks-pass "pass:${{ secrets.KEYSTORE_PASSWORD }}" \
+            --key-pass "pass:${{ secrets.KEY_PASSWORD }}" \
+            --ks-key-alias "${{ secrets.KEY_ALIAS }}" \
             --out registro-lavorazioni.apk \
             app-aligned.apk
 
