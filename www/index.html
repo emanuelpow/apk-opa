@@ -44,7 +44,7 @@
 <div class="metric"><b id="impMoney">€ 0,00</b><span>SOLO IMPIANTI</span></div>
 </div></div>
 
-<div class="card"><h2>💾 Backup e ripristino</h2><div class="note">Il backup contiene lavorazioni, prezzi e tutte le informazioni salvate dall'app. Puoi conservarlo nella cartella Download/File del telefono e usarlo per ripristinare i dati.</div><div class="backup-buttons" style="margin-top:12px"><button class="success" onclick="backupData()">💾 SALVA BACKUP SUL TELEFONO</button><button onclick="document.getElementById('backupFile').click()">♻️ RIPRISTINA BACKUP</button></div><input id="backupFile" type="file" accept=".json,application/json" style="display:none" onchange="restoreBackup(event)"><div class="small">Consiglio: fai un backup prima di aggiornare o reinstallare l'app.</div></div>
+<div class="card"><h2>💾 Backup e ripristino</h2><div class="note">Il backup contiene lavorazioni, prezzi e tutte le informazioni salvate dall'app. Quando premi Salva backup si apre il pannello del telefono: scegli File/Salva su dispositivo e indica dove conservarlo.</div><div class="backup-buttons" style="margin-top:12px"><button class="success" onclick="backupData()">💾 SALVA BACKUP SUL TELEFONO</button><button onclick="document.getElementById('backupFile').click()">♻️ RIPRISTINA BACKUP</button></div><input id="backupFile" type="file" accept=".json,application/json" style="display:none" onchange="restoreBackup(event)"><div class="small">Consiglio: fai un backup prima di aggiornare o reinstallare l'app. Conserva il file anche fuori dall'app.</div></div>
 
 <div class="card"><h2>Esporta mese</h2><div class="actions"><button onclick="exportCSV()">📥 SCARICA CSV</button><button onclick="exportExcel()">📊 SCARICA EXCEL</button></div></div>
 
@@ -87,8 +87,55 @@ function drawBars(scored){let box=document.getElementById('bars');box.innerHTML=
 function csvEscape(s){return '"'+String(s).replaceAll('"','""')+'"'}
 function exportCSV(){let rows=monthRows(),s={impianti:0,guasti:0,task:0,tto:0,attivazioni:0},money=0,out=[['Data','Impianti','Guasti','Task','TTO','Attivazioni','€ Giorno']];rows.forEach(([k,r])=>{let m=dayMoney(r);out.push([fmtDate(k),r.impianti,r.guasti,r.task,r.tto,r.attivazioni,m.toFixed(2).replace('.',',')]);Object.keys(s).forEach(x=>s[x]+=Number(r[x])||0);money+=m});out.push(['TOTALE',s.impianti,s.guasti,s.task,s.tto,s.attivazioni,money.toFixed(2).replace('.',',')]);download('\ufeff'+out.map(row=>row.map(csvEscape).join(';')).join('\n'),'registro_'+monthKey()+'.csv','text/csv;charset=utf-8')}
 function exportExcel(){let rows=monthRows(),s={impianti:0,guasti:0,task:0,tto:0,attivazioni:0},money=0,html='<html><head><meta charset="UTF-8"></head><body><table border="1"><tr><th>Data</th><th>Impianti</th><th>Guasti</th><th>Task</th><th>TTO</th><th>Attivazioni</th><th>€ Giorno</th></tr>';rows.forEach(([k,r])=>{let m=dayMoney(r);html+=`<tr><td>${fmtDate(k)}</td><td>${r.impianti}</td><td>${r.guasti}</td><td>${r.task}</td><td>${r.tto}</td><td>${r.attivazioni}</td><td>${m.toFixed(2)}</td></tr>`;Object.keys(s).forEach(x=>s[x]+=Number(r[x])||0);money+=m});html+=`<tr><th>TOTALE</th><th>${s.impianti}</th><th>${s.guasti}</th><th>${s.task}</th><th>${s.tto}</th><th>${s.attivazioni}</th><th>${money.toFixed(2)}</th></tr></table></body></html>`;download('\ufeff'+html,'registro_'+monthKey()+'.xls','application/vnd.ms-excel')}
-function download(content,name,type){let blob=new Blob([content],{type}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
-function backupData(){let backup={app:'Registro Lavorazioni',version:2,createdAt:new Date().toISOString(),data:data,prices:prices};let json=JSON.stringify(backup,null,2);download(json,'backup_registro_lavorazioni_'+keyFor(new Date())+'.json','application/json');alert('Backup creato. Controlla Download/File del telefono.')}
+async function download(content,name,type){
+  let blob=new Blob([content],{type});
+  let file=new File([blob],name,{type});
+
+  // Su Android prova prima il pannello di condivisione/salvataggio del sistema.
+  if(navigator.share && (!navigator.canShare || navigator.canShare({files:[file]}))){
+    try{
+      await navigator.share({
+        title:name,
+        text:'File esportato da Registro Lavorazioni',
+        files:[file]
+      });
+      return true;
+    }catch(e){
+      // Se l'utente annulla, non mostriamo un errore.
+      if(e && e.name==='AbortError') return false;
+    }
+  }
+
+  // Fallback per browser/WebView che non supportano la condivisione dei file.
+  let a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=name;
+  a.style.display='none';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+  return true;
+}
+
+async function backupData(){
+  let backup={
+    app:'Registro Lavorazioni',
+    version:2,
+    createdAt:new Date().toISOString(),
+    data:data,
+    prices:prices
+  };
+  let json=JSON.stringify(backup,null,2);
+  let ok=await download(
+    json,
+    'backup_registro_lavorazioni_'+keyFor(new Date())+'.json',
+    'application/json'
+  );
+  if(ok){
+    alert('Backup pronto. Nel pannello Android scegli File/Salva su dispositivo e poi la cartella Download.');
+  }
+}
 function restoreBackup(event){let file=event.target.files&&event.target.files[0];if(!file)return;let reader=new FileReader();reader.onload=function(){try{let b=JSON.parse(reader.result);if(!b||typeof b.data!=='object'||!b.prices)throw new Error('Formato non valido');if(!confirm('Il ripristino sostituirà i dati attuali con quelli del backup. Continuare?'))return;data=b.data;prices=b.prices;save();savePriceDB();render();alert('Backup ripristinato correttamente.')}catch(e){alert('Backup non valido o danneggiato.')}};reader.readAsText(file);event.target.value=''}
 render();resetForm();
 </script>
