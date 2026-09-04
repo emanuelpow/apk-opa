@@ -1,7 +1,6 @@
 {
   "name": "registro-lavorazioni",
   "version": "1.0.0",
-  "description": "Registro Lavorazioni Android",
   "scripts": {
     "build": "npx cap sync android"
   },
