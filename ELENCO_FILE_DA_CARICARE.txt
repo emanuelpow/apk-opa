@@ -1,0 +1,12 @@
+FILE DA CARICARE NEL REPOSITORY GITHUB
+
+1. package.json
+2. capacitor.config.json
+3. www/index.html
+4. .github/workflows/build-apk.yml
+5. README.txt
+
+IMPORTANTE
+- Non modificare o eliminare i GitHub Secrets: KEYSTORE_BASE64, KEYSTORE_PASSWORD, KEY_ALIAS, KEY_PASSWORD.
+- Il backup ora usa il filesystem Android nativo e salva il JSON nella cartella Documenti, poi apre il pannello per inviarlo/condividerlo.
+- Il pulsante INVIA RIEPILOGO MENSILE crea un messaggio con SOLO i totali di Impianti, Guasti, Task, TTO, Attivazioni e Totale lavorazioni.
