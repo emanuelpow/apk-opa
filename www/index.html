@@ -5,266 +5,92 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Registro Lavorazioni</title>
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#f4f6f8;color:#17202a}
-.container{max-width:900px;margin:auto;padding:18px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}
-h1{font-size:25px;margin:0}.subtitle{color:#68737d;font-size:14px;margin-top:3px}
-.monthbar{display:flex;align-items:center;gap:8px}.monthbar button{width:42px;height:42px}
-button{border:0;border-radius:10px;background:#17202a;color:white;padding:11px 14px;font-weight:700;cursor:pointer}
-button.secondary{background:#e6eaee;color:#17202a}button.danger{background:#c0392b}
-.card{background:white;border-radius:16px;padding:18px;box-shadow:0 3px 14px #0000000d;margin-bottom:16px}
-h2{font-size:18px;margin:0 0 14px}.date{font-size:14px;color:#66727c;margin-bottom:14px}
-.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
-label{font-size:13px;font-weight:700;color:#53606b}.field{display:flex;flex-direction:column;gap:6px}
-input{width:100%;font-size:21px;font-weight:700;padding:11px;border:2px solid #e1e5e8;border-radius:10px;text-align:center;outline:none}
-input:focus{border-color:#17202a}.actions{display:flex;gap:9px;margin-top:15px}.actions button{flex:1}
-.tablewrap{overflow-x:auto}.table{width:100%;border-collapse:collapse;min-width:800px}
-th,td{padding:11px 8px;border-bottom:1px solid #edf0f2;text-align:center;font-size:14px}th{font-size:12px;color:#68737d;text-transform:uppercase}
-td:first-child,th:first-child{text-align:left}.rowactions{display:flex;gap:6px;justify-content:center}.rowactions button{padding:7px 9px;font-size:12px}
-.totals{position:sticky;bottom:0;background:#17202a;color:white;border-radius:16px;padding:16px;margin-top:16px;box-shadow:0 -4px 18px #0002}
-.totalgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;text-align:center}.totalgrid div{background:#26323d;border-radius:10px;padding:9px 5px}.totalgrid b{display:block;font-size:22px}.totalgrid span{font-size:11px;color:#cbd3d9}
-.totalall{margin-top:10px;text-align:center;font-size:15px}.empty{text-align:center;color:#8a949c;padding:22px}
-.moneybar{margin-top:12px;background:#1f8a4c;border-radius:12px;padding:12px;text-align:center}
-.moneybar b{font-size:26px;display:block}.moneybar span{font-size:12px;color:#d7f2e2}
-.note{font-size:12px;color:#75808a;margin-top:9px}
-.pricegrid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
-.pricegrid label{display:block;margin-bottom:6px}
-.statgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.statbox{background:#f4f6f8;border-radius:12px;padding:14px;text-align:center}
-.statbox.best{border:2px solid #1f8a4c}.statbox.worst{border:2px solid #c0392b}
-.statbox .lbl{font-size:12px;color:#68737d;text-transform:uppercase;font-weight:700}
-.statbox .val{font-size:20px;font-weight:800;margin-top:6px}
-.statbox .sub{font-size:13px;color:#53606b;margin-top:3px}
-.avgrow{margin-top:12px;text-align:center;font-size:14px;color:#53606b}
-@media(max-width:650px){.container{padding:12px}.top{align-items:flex-start;flex-direction:column}.monthbar{width:100%}.monthbar button{flex:0 0 42px}.monthbar .monthname{flex:1;text-align:center;font-weight:800}.grid{grid-template-columns:repeat(2,1fr)}.grid .field:last-child{grid-column:1/-1}.totalgrid{grid-template-columns:repeat(3,1fr)}h1{font-size:22px}.pricegrid{grid-template-columns:repeat(2,1fr)}.pricegrid .field:last-child{grid-column:1/-1}.statgrid{grid-template-columns:1fr}}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#f4f6f8;color:#17202a}.container{max-width:950px;margin:auto;padding:12px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}h1{font-size:25px;margin:0}.subtitle,.note{color:#68737d;font-size:13px;margin-top:3px}.monthbar{display:flex;align-items:center;gap:8px}.monthbar button{width:42px;height:42px}button{border:0;border-radius:10px;background:#17202a;color:white;padding:11px 14px;font-weight:700;cursor:pointer}button.secondary{background:#e6eaee;color:#17202a}button.danger{background:#c0392b}.card{background:white;border-radius:16px;padding:18px;box-shadow:0 3px 14px #0000000d;margin-bottom:16px}h2{font-size:18px;margin:0 0 14px}.date{font-size:14px;color:#66727c;margin-bottom:14px}.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}label{font-size:13px;font-weight:700;color:#53606b}.field{display:flex;flex-direction:column;gap:6px}input{width:100%;font-size:21px;font-weight:700;padding:11px;border:2px solid #e1e5e8;border-radius:10px;text-align:center;outline:none}input:focus{border-color:#17202a}.actions{display:flex;gap:9px;margin-top:15px}.actions button{flex:1}.tablewrap{overflow-x:auto}.table{width:100%;border-collapse:collapse;min-width:790px}th,td{padding:10px 7px;border-bottom:1px solid #edf0f2;text-align:center;font-size:13px}th{font-size:11px;color:#68737d;text-transform:uppercase}td:first-child,th:first-child{text-align:left}.rowactions{display:flex;gap:6px;justify-content:center}.rowactions button{padding:7px 9px;font-size:11px}.totals{position:sticky;bottom:0;background:#17202a;color:white;border-radius:16px;padding:16px;margin-top:16px;box-shadow:0 -4px 18px #0002}.totalgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;text-align:center}.totalgrid div{background:#26323d;border-radius:10px;padding:9px 5px}.totalgrid b{display:block;font-size:22px}.totalgrid span{font-size:10px;color:#cbd3d9}.totalall{margin-top:10px;text-align:center;font-size:15px}.empty{text-align:center;color:#8a949c;padding:22px}.pricegrid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.pricegrid button{grid-column:1/-1}.moneygrid,.statsgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.metric,.stat{background:#f0f3f5;border-radius:12px;padding:13px;text-align:center}.metric b,.stat-value{display:block;font-size:21px;font-weight:800}.metric span,.stat-title{font-size:11px;color:#68737d}.stat-title{text-transform:uppercase;font-weight:800}.statsgrid{grid-template-columns:repeat(2,1fr)}.chart{margin-top:15px}.chart-title{font-weight:800;font-size:13px;margin-bottom:7px}.bars{height:190px;display:flex;align-items:flex-end;gap:5px;overflow-x:auto;border-bottom:1px solid #dce1e5;padding:5px}.barwrap{height:100%;min-width:27px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center}.bar{width:20px;background:#17202a;border-radius:5px 5px 0 0;min-height:2px}.barvalue,.barlabel{font-size:9px;color:#68737d}.barlabel{margin-top:3px}.backup-buttons{display:grid;grid-template-columns:1fr 1fr;gap:9px}.backup-buttons button{width:100%}.success{background:#2d6a4f}.small{font-size:11px;color:#68737d;margin-top:8px}
+@media(max-width:650px){.container{padding:10px}.top{align-items:flex-start;flex-direction:column}.monthbar{width:100%}.monthbar .monthname{flex:1;text-align:center;font-weight:800}.grid,.pricegrid{grid-template-columns:repeat(2,1fr)}.grid .field:last-child,.pricegrid .field:nth-last-child(2){grid-column:1/-1}.totalgrid{grid-template-columns:repeat(3,1fr)}.moneygrid{grid-template-columns:1fr}.statsgrid{grid-template-columns:1fr}.backup-buttons{grid-template-columns:1fr}h1{font-size:22px}}
 </style>
 </head>
 <body>
 <div class="container">
-  <div class="top">
-    <div><h1>📋 Registro Lavorazioni</h1><div class="subtitle">Inserisci le lavorazioni ogni giorno. I dati restano sul dispositivo.</div></div>
-    <div class="monthbar"><button class="secondary" onclick="changeMonth(-1)">‹</button><div class="monthname" id="monthName"></div><button class="secondary" onclick="changeMonth(1)">›</button></div>
-  </div>
+<div class="top"><div><h1>📋 Registro Lavorazioni</h1><div class="subtitle">Produzione, statistiche, guadagno e backup dei dati</div></div><div class="monthbar"><button class="secondary" onclick="changeMonth(-1)">‹</button><div class="monthname" id="monthName"></div><button class="secondary" onclick="changeMonth(1)">›</button></div></div>
 
-  <div class="card">
-    <h2>Inserisci giornata</h2>
-    <div class="date" id="selectedDateText"></div>
-    <div class="grid">
-      <div class="field"><label>Impianti</label><input id="impianti" type="number" min="0" step="1" value="0"></div>
-      <div class="field"><label>Guasti</label><input id="guasti" type="number" min="0" step="1" value="0"></div>
-      <div class="field"><label>Task</label><input id="task" type="number" min="0" step="1" value="0"></div>
-      <div class="field"><label>TTO</label><input id="tto" type="number" min="0" step="1" value="0"></div>
-      <div class="field"><label>Attivazioni</label><input id="attivazioni" type="number" min="0" step="1" value="0"></div>
-    </div>
-    <div class="actions">
-      <button onclick="saveDay()">SALVA GIORNATA</button>
-      <button class="secondary" onclick="resetForm()">ANNULLA</button>
-    </div>
-    <div class="note">Puoi modificare una giornata già inserita selezionando “Modifica”.</div>
-  </div>
+<div class="card"><h2>Inserisci giornata</h2><div class="date" id="selectedDateText"></div><div class="grid">
+<div class="field"><label>Impianti</label><input id="impianti" type="number" min="0" step="1" value="0"></div>
+<div class="field"><label>Guasti</label><input id="guasti" type="number" min="0" step="1" value="0"></div>
+<div class="field"><label>Task</label><input id="task" type="number" min="0" step="1" value="0"></div>
+<div class="field"><label>TTO</label><input id="tto" type="number" min="0" step="1" value="0"></div>
+<div class="field"><label>Attivazioni</label><input id="attivazioni" type="number" min="0" step="1" value="0"></div>
+</div><div class="actions"><button onclick="saveDay()">SALVA GIORNATA</button><button class="secondary" onclick="resetForm()">ANNULLA</button></div></div>
 
-  <div class="card">
-    <h2>💶 Prezzi per attività</h2>
-    <div class="pricegrid">
-      <div class="field"><label>Impianti (€)</label><input id="price-impianti" type="number" min="0" step="0.01" value="0"></div>
-      <div class="field"><label>Guasti (€)</label><input id="price-guasti" type="number" min="0" step="0.01" value="0"></div>
-      <div class="field"><label>Task (€)</label><input id="price-task" type="number" min="0" step="0.01" value="0"></div>
-      <div class="field"><label>TTO (€)</label><input id="price-tto" type="number" min="0" step="0.01" value="0"></div>
-      <div class="field"><label>Attivazioni (€)</label><input id="price-attivazioni" type="number" min="0" step="0.01" value="0"></div>
-    </div>
-    <div class="actions">
-      <button onclick="savePrices()">SALVA PREZZI</button>
-    </div>
-    <div class="note">Imposta quanto vale ogni singola attività: il guadagno verrà calcolato automaticamente.</div>
-  </div>
+<div class="card"><h2>💶 Prezzi per attività</h2><div class="note">Imposta quanto vieni pagato per ogni lavorazione. I prezzi restano salvati sul telefono.</div><div class="pricegrid" style="margin-top:12px">
+<div class="field"><label>Impianto (€)</label><input id="priceImpianti" type="number" min="0" step="0.01"></div>
+<div class="field"><label>Guasto (€)</label><input id="priceGuasti" type="number" min="0" step="0.01"></div>
+<div class="field"><label>Task (€)</label><input id="priceTask" type="number" min="0" step="0.01"></div>
+<div class="field"><label>TTO (€)</label><input id="priceTto" type="number" min="0" step="0.01"></div>
+<div class="field"><label>Attivazione (€)</label><input id="priceAttivazioni" type="number" min="0" step="0.01"></div>
+<button onclick="savePrices()">SALVA PREZZI</button></div></div>
 
-  <div class="card">
-    <h2>📊 Statistiche di <span id="statMonthTitle"></span></h2>
-    <div class="statgrid">
-      <div class="statbox best">
-        <div class="lbl">Giorno più produttivo</div>
-        <div class="val" id="bestDay">-</div>
-        <div class="sub" id="bestDayVal">-</div>
-      </div>
-      <div class="statbox worst">
-        <div class="lbl">Giorno meno produttivo</div>
-        <div class="val" id="worstDay">-</div>
-        <div class="sub" id="worstDayVal">-</div>
-      </div>
-    </div>
-    <div class="avgrow" id="avgRow">Media giornaliera: -</div>
-  </div>
+<div class="card"><h2>Giornate di <span id="monthTitle"></span></h2><div class="tablewrap"><table class="table"><thead><tr><th>Data</th><th>Impianti</th><th>Guasti</th><th>Task</th><th>TTO</th><th>Attivazioni</th><th>€ Giorno</th><th>Azioni</th></tr></thead><tbody id="tbody"></tbody></table></div><div id="empty" class="empty">Nessuna giornata registrata.</div></div>
 
-  <div class="card">
-    <h2>Giornate di <span id="monthTitle"></span></h2>
-    <div class="tablewrap">
-      <table class="table">
-        <thead><tr><th>Data</th><th>Impianti</th><th>Guasti</th><th>Task</th><th>TTO</th><th>Attivazioni</th><th>Tot.</th><th>Valore €</th><th>Azioni</th></tr></thead>
-        <tbody id="tbody"></tbody>
-      </table>
-    </div>
-    <div id="empty" class="empty" style="display:none">Nessuna giornata registrata.</div>
-  </div>
+<div class="card"><h2>📊 Statistiche del mese</h2><div class="statsgrid">
+<div class="stat"><div class="stat-title">Giorno più produttivo</div><div class="stat-value" id="bestDay">—</div></div>
+<div class="stat"><div class="stat-title">Giorno meno produttivo</div><div class="stat-value" id="worstDay">—</div></div>
+<div class="stat"><div class="stat-title">Media lavorazioni/giorno</div><div class="stat-value" id="avgWorks">0</div></div>
+<div class="stat"><div class="stat-title">Media € / giorno</div><div class="stat-value" id="avgMoney">€ 0,00</div></div>
+</div><div class="chart"><div class="chart-title">Lavorazioni per giorno</div><div class="bars" id="bars"></div></div></div>
 
-  <div class="card">
-    <h2>Esporta mese</h2>
-    <div class="actions">
-      <button onclick="exportCSV()">📥 SCARICA CSV</button>
-      <button onclick="exportExcel()">📊 SCARICA EXCEL</button>
-    </div>
-    <div class="note">Il file contiene tutte le giornate del mese, il totale finale e il valore in euro.</div>
-  </div>
+<div class="card"><h2>💰 Produzione economica</h2><div class="moneygrid">
+<div class="metric"><b id="monthMoney">€ 0,00</b><span>PRODOTTO NEL MESE</span></div>
+<div class="metric"><b id="bestMoneyDay">—</b><span>GIORNO CON PIÙ €</span></div>
+<div class="metric"><b id="impMoney">€ 0,00</b><span>SOLO IMPIANTI</span></div>
+</div></div>
 
-  <div class="totals">
-    <div style="font-weight:800;margin-bottom:10px" id="totalTitle">TOTALE MESE</div>
-    <div class="totalgrid">
-      <div><b id="tot-impianti">0</b><span>IMPIANTI</span></div>
-      <div><b id="tot-guasti">0</b><span>GUASTI</span></div>
-      <div><b id="tot-task">0</b><span>TASK</span></div>
-      <div><b id="tot-tto">0</b><span>TTO</span></div>
-      <div><b id="tot-attivazioni">0</b><span>ATTIVAZIONI</span></div>
-      <div><b id="tot-lavorazioni">0</b><span>TOTALE</span></div>
-    </div>
-    <div class="totalall" id="totalAllText">0 lavorazioni totali</div>
-    <div class="moneybar">
-      <b id="tot-money">€ 0,00</b>
-      <span>guadagno stimato questo mese</span>
-    </div>
-  </div>
+<div class="card"><h2>💾 Backup e ripristino</h2><div class="note">Il backup contiene lavorazioni, prezzi e tutte le informazioni salvate dall'app. Puoi conservarlo nella cartella Download/File del telefono e usarlo per ripristinare i dati.</div><div class="backup-buttons" style="margin-top:12px"><button class="success" onclick="backupData()">💾 SALVA BACKUP SUL TELEFONO</button><button onclick="document.getElementById('backupFile').click()">♻️ RIPRISTINA BACKUP</button></div><input id="backupFile" type="file" accept=".json,application/json" style="display:none" onchange="restoreBackup(event)"><div class="small">Consiglio: fai un backup prima di aggiornare o reinstallare l'app.</div></div>
+
+<div class="card"><h2>Esporta mese</h2><div class="actions"><button onclick="exportCSV()">📥 SCARICA CSV</button><button onclick="exportExcel()">📊 SCARICA EXCEL</button></div></div>
+
+<div class="totals"><div style="font-weight:800;margin-bottom:10px" id="totalTitle">TOTALE MESE</div><div class="totalgrid">
+<div><b id="tot-impianti">0</b><span>IMPIANTI</span></div><div><b id="tot-guasti">0</b><span>GUASTI</span></div><div><b id="tot-task">0</b><span>TASK</span></div><div><b id="tot-tto">0</b><span>TTO</span></div><div><b id="tot-attivazioni">0</b><span>ATTIVAZIONI</span></div><div><b id="tot-lavorazioni">0</b><span>TOTALE</span></div></div><div class="totalall" id="totalAllText">0 lavorazioni totali · € 0,00</div></div>
 </div>
 
 <script>
 const KEY='registro_lavorazioni_v1';
 const PRICE_KEY='registro_prezzi_v1';
-const CATS=['impianti','guasti','task','tto','attivazioni'];
 let data=JSON.parse(localStorage.getItem(KEY)||'{}');
-let prices=JSON.parse(localStorage.getItem(PRICE_KEY)||'{}');
-CATS.forEach(c=>{ if(typeof prices[c]!=='number') prices[c]=0; });
-let current=new Date();
-let editingDate=null;
-
+let prices=JSON.parse(localStorage.getItem(PRICE_KEY)||'{"impianti":110,"guasti":30,"task":30,"tto":30,"attivazioni":30}');
+let current=new Date(),editingDate=null;
 function pad(n){return String(n).padStart(2,'0')}
 function keyFor(d){return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`}
 function monthKey(){return `${current.getFullYear()}-${pad(current.getMonth()+1)}`}
 function fmtMonth(){return current.toLocaleDateString('it-IT',{month:'long',year:'numeric'}).replace(/^./,c=>c.toUpperCase())}
-function fmtDate(k){let [y,m,d]=k.split('-'); return `${d}/${m}/${y.slice(2)}`}
-function fmtMoney(v){return v.toLocaleString('it-IT',{style:'currency',currency:'EUR'})}
+function fmtDate(k){let[y,m,d]=k.split('-');return `${d}/${m}/${y.slice(2)}`}
+function euro(n){return new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR'}).format(Number(n)||0)}
 function save(){localStorage.setItem(KEY,JSON.stringify(data))}
-function savePricesStorage(){localStorage.setItem(PRICE_KEY,JSON.stringify(prices))}
-function dayTotal(r){return CATS.reduce((s,c)=>s+(Number(r[c])||0),0)}
-function dayValue(r){return CATS.reduce((s,c)=>s+(Number(r[c])||0)*(Number(prices[c])||0),0)}
-
-function loadPricesToForm(){
- CATS.forEach(c=>document.getElementById('price-'+c).value=prices[c]);
-}
-function savePrices(){
- CATS.forEach(c=>{prices[c]=Math.max(0,parseFloat(document.getElementById('price-'+c).value)||0)});
- savePricesStorage(); render();
-}
-
-function changeMonth(delta){current.setMonth(current.getMonth()+delta); editingDate=null; resetForm(); render()}
-function resetForm(){
- editingDate=null;
- document.getElementById('selectedDateText').textContent='Data: '+new Date().toLocaleDateString('it-IT');
- CATS.forEach(id=>document.getElementById(id).value=0);
-}
-function getValues(){
- return CATS.map(id=>Math.max(0,parseInt(document.getElementById(id).value)||0));
-}
-function saveDay(){
- let k=editingDate||keyFor(new Date());
- if(editingDate===null && (new Date()).getFullYear()===current.getFullYear() && (new Date()).getMonth()===current.getMonth()) k=keyFor(new Date());
- else if(editingDate===null) k=`${current.getFullYear()}-${pad(current.getMonth()+1)}-01`;
- let v=getValues();
- data[k]={impianti:v[0],guasti:v[1],task:v[2],tto:v[3],attivazioni:v[4]};
- save(); render(); resetForm();
-}
-function editDay(k){
- editingDate=k; let r=data[k];
- CATS.forEach(id=>document.getElementById(id).value=r[id]);
- document.getElementById('selectedDateText').textContent='Modifica: '+fmtDate(k);
- window.scrollTo({top:0,behavior:'smooth'});
-}
-function deleteDay(k){
- if(confirm('Eliminare la giornata del '+fmtDate(k)+'?')){delete data[k];save();render(); if(editingDate===k)resetForm();}
-}
+function savePriceDB(){localStorage.setItem(PRICE_KEY,JSON.stringify(prices))}
+function dayMoney(r){return r.impianti*prices.impianti+r.guasti*prices.guasti+r.task*prices.task+r.tto*prices.tto+r.attivazioni*prices.attivazioni}
+function works(r){return r.impianti+r.guasti+r.task+r.tto+r.attivazioni}
+function changeMonth(delta){current.setMonth(current.getMonth()+delta);editingDate=null;resetForm();render()}
+function resetForm(){editingDate=null;['impianti','guasti','task','tto','attivazioni'].forEach(id=>document.getElementById(id).value=0);document.getElementById('selectedDateText').textContent='Data: '+new Date().toLocaleDateString('it-IT')}
+function loadPrices(){document.getElementById('priceImpianti').value=prices.impianti;document.getElementById('priceGuasti').value=prices.guasti;document.getElementById('priceTask').value=prices.task;document.getElementById('priceTto').value=prices.tto;document.getElementById('priceAttivazioni').value=prices.attivazioni}
+function savePrices(){prices={impianti:Math.max(0,parseFloat(document.getElementById('priceImpianti').value)||0),guasti:Math.max(0,parseFloat(document.getElementById('priceGuasti').value)||0),task:Math.max(0,parseFloat(document.getElementById('priceTask').value)||0),tto:Math.max(0,parseFloat(document.getElementById('priceTto').value)||0),attivazioni:Math.max(0,parseFloat(document.getElementById('priceAttivazioni').value)||0)};savePriceDB();render();alert('Prezzi salvati.')}
+function saveDay(){let k=editingDate||keyFor(new Date());if(!editingDate&&((new Date()).getFullYear()!==current.getFullYear()||(new Date()).getMonth()!==current.getMonth()))k=`${current.getFullYear()}-${pad(current.getMonth()+1)}-01`;data[k]={impianti:Math.max(0,parseInt(document.getElementById('impianti').value)||0),guasti:Math.max(0,parseInt(document.getElementById('guasti').value)||0),task:Math.max(0,parseInt(document.getElementById('task').value)||0),tto:Math.max(0,parseInt(document.getElementById('tto').value)||0),attivazioni:Math.max(0,parseInt(document.getElementById('attivazioni').value)||0)};save();render();resetForm()}
+function editDay(k){editingDate=k;let r=data[k];['impianti','guasti','task','tto','attivazioni'].forEach(id=>document.getElementById(id).value=r[id]);document.getElementById('selectedDateText').textContent='Modifica: '+fmtDate(k);window.scrollTo({top:0,behavior:'smooth'})}
+function deleteDay(k){if(confirm('Eliminare la giornata del '+fmtDate(k)+'?')){delete data[k];save();render();if(editingDate===k)resetForm()}}
+function monthRows(){return Object.keys(data).filter(k=>k.startsWith(monthKey())).sort().map(k=>[k,data[k]])}
 function render(){
- document.getElementById('monthName').textContent=fmtMonth();
- document.getElementById('monthTitle').textContent=fmtMonth();
- document.getElementById('statMonthTitle').textContent=fmtMonth();
- document.getElementById('totalTitle').textContent='TOTALE '+fmtMonth().toUpperCase();
- loadPricesToForm();
- let rows=Object.keys(data).filter(k=>k.startsWith(monthKey())).sort();
- let tbody=document.getElementById('tbody'); tbody.innerHTML='';
- let sums={impianti:0,guasti:0,task:0,tto:0,attivazioni:0};
- let totalMoney=0;
- let best=null, worst=null;
- rows.forEach(k=>{
-   let r=data[k]; CATS.forEach(x=>sums[x]+=Number(r[x])||0);
-   let t=dayTotal(r), v=dayValue(r);
-   totalMoney+=v;
-   if(best===null || t>best.t) best={k,t,v};
-   if(worst===null || t<worst.t) worst={k,t,v};
-   let tr=document.createElement('tr');
-   tr.innerHTML=`<td><b>${fmtDate(k)}</b></td><td>${r.impianti}</td><td>${r.guasti}</td><td>${r.task}</td><td>${r.tto}</td><td>${r.attivazioni}</td><td><b>${t}</b></td><td>${fmtMoney(v)}</td><td><div class="rowactions"><button class="secondary" onclick="editDay('${k}')">Modifica</button><button class="danger" onclick="deleteDay('${k}')">X</button></div></td>`;
-   tbody.appendChild(tr);
- });
- document.getElementById('empty').style.display=rows.length?'none':'block';
- CATS.forEach(x=>document.getElementById('tot-'+x).textContent=sums[x]);
- let total=Object.values(sums).reduce((a,b)=>a+b,0);
- document.getElementById('tot-lavorazioni').textContent=total;
- document.getElementById('totalAllText').textContent=total+' lavorazioni totali';
- document.getElementById('tot-money').textContent=fmtMoney(totalMoney);
-
- if(best && worst && rows.length){
-   document.getElementById('bestDay').textContent=fmtDate(best.k);
-   document.getElementById('bestDayVal').textContent=best.t+' lavorazioni · '+fmtMoney(best.v);
-   document.getElementById('worstDay').textContent=fmtDate(worst.k);
-   document.getElementById('worstDayVal').textContent=worst.t+' lavorazioni · '+fmtMoney(worst.v);
-   let avg=total/rows.length;
-   document.getElementById('avgRow').textContent='Media giornaliera: '+avg.toFixed(1)+' lavorazioni su '+rows.length+' giorni registrati';
- } else {
-   document.getElementById('bestDay').textContent='-';
-   document.getElementById('bestDayVal').textContent='Nessun dato';
-   document.getElementById('worstDay').textContent='-';
-   document.getElementById('worstDayVal').textContent='Nessun dato';
-   document.getElementById('avgRow').textContent='Media giornaliera: -';
- }
-
- if(!editingDate) document.getElementById('selectedDateText').textContent='Data: '+new Date().toLocaleDateString('it-IT');
+ document.getElementById('monthName').textContent=fmtMonth();document.getElementById('monthTitle').textContent=fmtMonth();document.getElementById('totalTitle').textContent='TOTALE '+fmtMonth().toUpperCase();loadPrices();
+ let rows=monthRows(),tbody=document.getElementById('tbody');tbody.innerHTML='';let sums={impianti:0,guasti:0,task:0,tto:0,attivazioni:0},monthMoney=0,impMoney=0;
+ rows.forEach(([k,r])=>{Object.keys(sums).forEach(x=>sums[x]+=Number(r[x])||0);let m=dayMoney(r);monthMoney+=m;impMoney+=r.impianti*prices.impianti;let tr=document.createElement('tr');tr.innerHTML=`<td><b>${fmtDate(k)}</b></td><td>${r.impianti}</td><td>${r.guasti}</td><td>${r.task}</td><td>${r.tto}</td><td>${r.attivazioni}</td><td><b>${euro(m)}</b></td><td><div class="rowactions"><button class="secondary" onclick="editDay('${k}')">Modifica</button><button class="danger" onclick="deleteDay('${k}')">X</button></div></td>`;tbody.appendChild(tr)});
+ document.getElementById('empty').style.display=rows.length?'none':'block';Object.keys(sums).forEach(x=>document.getElementById('tot-'+x).textContent=sums[x]);let total=Object.values(sums).reduce((a,b)=>a+b,0);document.getElementById('tot-lavorazioni').textContent=total;document.getElementById('totalAllText').textContent=total+' lavorazioni totali · '+euro(monthMoney);document.getElementById('monthMoney').textContent=euro(monthMoney);document.getElementById('impMoney').textContent=euro(impMoney);
+ if(rows.length){let scored=rows.map(([k,r])=>({k,r,w:works(r),m:dayMoney(r)}));let best=scored.reduce((a,b)=>b.w>a.w?b:a),worst=scored.reduce((a,b)=>b.w<a.w?b:a),bestMoney=scored.reduce((a,b)=>b.m>a.m?b:a);document.getElementById('bestDay').textContent=fmtDate(best.k)+' · '+best.w;document.getElementById('worstDay').textContent=fmtDate(worst.k)+' · '+worst.w;document.getElementById('avgWorks').textContent=(total/rows.length).toFixed(1);document.getElementById('avgMoney').textContent=euro(monthMoney/rows.length);document.getElementById('bestMoneyDay').textContent=fmtDate(bestMoney.k)+' · '+euro(bestMoney.m);drawBars(scored)}else{document.getElementById('bestDay').textContent='—';document.getElementById('worstDay').textContent='—';document.getElementById('avgWorks').textContent='0';document.getElementById('avgMoney').textContent='€ 0,00';document.getElementById('bestMoneyDay').textContent='—';document.getElementById('bars').innerHTML='<div class="empty">Inserisci le giornate per vedere il grafico.</div>'}
 }
-function monthRows(){
- return Object.keys(data).filter(k=>k.startsWith(monthKey())).sort().map(k=>[k,data[k]]);
-}
+function drawBars(scored){let box=document.getElementById('bars');box.innerHTML='';let max=Math.max(...scored.map(x=>x.w),1);scored.forEach(x=>{let h=Math.max(2,Math.round(x.w/max*145));let w=document.createElement('div');w.className='barwrap';w.innerHTML=`<div class="barvalue">${x.w}</div><div class="bar" style="height:${h}px"></div><div class="barlabel">${x.k.slice(8)}</div>`;box.appendChild(w)})}
 function csvEscape(s){return '"'+String(s).replaceAll('"','""')+'"'}
-function exportCSV(){
- let rows=monthRows(), sums={impianti:0,guasti:0,task:0,tto:0,attivazioni:0}, totalMoney=0;
- let out=[['Data','Impianti','Guasti','Task','TTO','Attivazioni','Totale','Valore €']];
- rows.forEach(([k,r])=>{
-   let t=dayTotal(r), v=dayValue(r); totalMoney+=v;
-   out.push([fmtDate(k),r.impianti,r.guasti,r.task,r.tto,r.attivazioni,t,v.toFixed(2)]);
-   CATS.forEach(x=>sums[x]+=Number(r[x])||0);
- });
- let total=Object.values(sums).reduce((a,b)=>a+b,0);
- out.push(['TOTALE',sums.impianti,sums.guasti,sums.task,sums.tto,sums.attivazioni,total,totalMoney.toFixed(2)]);
- let csv='\ufeff'+out.map(row=>row.map(csvEscape).join(';')).join('\n');
- download(csv,`registro_${monthKey()}.csv`,'text/csv;charset=utf-8');
-}
-function exportExcel(){
- let rows=monthRows(), sums={impianti:0,guasti:0,task:0,tto:0,attivazioni:0}, totalMoney=0;
- let html='<html><head><meta charset="UTF-8"></head><body><table border="1"><tr><th>Data</th><th>Impianti</th><th>Guasti</th><th>Task</th><th>TTO</th><th>Attivazioni</th><th>Totale</th><th>Valore €</th></tr>';
- rows.forEach(([k,r])=>{
-   let t=dayTotal(r), v=dayValue(r); totalMoney+=v;
-   html+=`<tr><td>${fmtDate(k)}</td><td>${r.impianti}</td><td>${r.guasti}</td><td>${r.task}</td><td>${r.tto}</td><td>${r.attivazioni}</td><td>${t}</td><td>${v.toFixed(2)}</td></tr>`;
-   CATS.forEach(x=>sums[x]+=Number(r[x])||0);
- });
- let total=Object.values(sums).reduce((a,b)=>a+b,0);
- html+=`<tr><th>TOTALE</th><th>${sums.impianti}</th><th>${sums.guasti}</th><th>${sums.task}</th><th>${sums.tto}</th><th>${sums.attivazioni}</th><th>${total}</th><th>${totalMoney.toFixed(2)}</th></tr></table></body></html>`;
- download('\ufeff'+html,`registro_${monthKey()}.xls`,'application/vnd.ms-excel');
-}
-function download(content,name,type){
- let blob=new Blob([content],{type}), a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
-}
-render();
+function exportCSV(){let rows=monthRows(),s={impianti:0,guasti:0,task:0,tto:0,attivazioni:0},money=0,out=[['Data','Impianti','Guasti','Task','TTO','Attivazioni','€ Giorno']];rows.forEach(([k,r])=>{let m=dayMoney(r);out.push([fmtDate(k),r.impianti,r.guasti,r.task,r.tto,r.attivazioni,m.toFixed(2).replace('.',',')]);Object.keys(s).forEach(x=>s[x]+=Number(r[x])||0);money+=m});out.push(['TOTALE',s.impianti,s.guasti,s.task,s.tto,s.attivazioni,money.toFixed(2).replace('.',',')]);download('\ufeff'+out.map(row=>row.map(csvEscape).join(';')).join('\n'),'registro_'+monthKey()+'.csv','text/csv;charset=utf-8')}
+function exportExcel(){let rows=monthRows(),s={impianti:0,guasti:0,task:0,tto:0,attivazioni:0},money=0,html='<html><head><meta charset="UTF-8"></head><body><table border="1"><tr><th>Data</th><th>Impianti</th><th>Guasti</th><th>Task</th><th>TTO</th><th>Attivazioni</th><th>€ Giorno</th></tr>';rows.forEach(([k,r])=>{let m=dayMoney(r);html+=`<tr><td>${fmtDate(k)}</td><td>${r.impianti}</td><td>${r.guasti}</td><td>${r.task}</td><td>${r.tto}</td><td>${r.attivazioni}</td><td>${m.toFixed(2)}</td></tr>`;Object.keys(s).forEach(x=>s[x]+=Number(r[x])||0);money+=m});html+=`<tr><th>TOTALE</th><th>${s.impianti}</th><th>${s.guasti}</th><th>${s.task}</th><th>${s.tto}</th><th>${s.attivazioni}</th><th>${money.toFixed(2)}</th></tr></table></body></html>`;download('\ufeff'+html,'registro_'+monthKey()+'.xls','application/vnd.ms-excel')}
+function download(content,name,type){let blob=new Blob([content],{type}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+function backupData(){let backup={app:'Registro Lavorazioni',version:2,createdAt:new Date().toISOString(),data:data,prices:prices};let json=JSON.stringify(backup,null,2);download(json,'backup_registro_lavorazioni_'+keyFor(new Date())+'.json','application/json');alert('Backup creato. Controlla Download/File del telefono.')}
+function restoreBackup(event){let file=event.target.files&&event.target.files[0];if(!file)return;let reader=new FileReader();reader.onload=function(){try{let b=JSON.parse(reader.result);if(!b||typeof b.data!=='object'||!b.prices)throw new Error('Formato non valido');if(!confirm('Il ripristino sostituirà i dati attuali con quelli del backup. Continuare?'))return;data=b.data;prices=b.prices;save();savePriceDB();render();alert('Backup ripristinato correttamente.')}catch(e){alert('Backup non valido o danneggiato.')}};reader.readAsText(file);event.target.value=''}
+render();resetForm();
 </script>
 </body>
 </html>
